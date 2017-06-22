@@ -15,11 +15,7 @@ import * as d3Axis from "d3-axis";
 })
 export class WeatherComponent implements OnInit {
 
-  
-
-  
-  title: string = 'D3.js with Angular 2!';
-  subtitle: string = 'Line Chart';
+subtitle: string = 'Line Chart';
 
   private margin = {top: 20, right: 20, bottom: 30, left: 50};
   private width: number;

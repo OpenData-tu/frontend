@@ -23,7 +23,9 @@ import { MetadataService } from "./metadata.service";
   imports: [
     BrowserModule,
     HttpModule,
-    InMemoryWebApiModule.forRoot(InMemoryDataService),
+    InMemoryWebApiModule.forRoot(InMemoryDataService,{
+  passThruUnknownUrl: true
+}),
     RouterModule.forRoot([
       {
         path: '',

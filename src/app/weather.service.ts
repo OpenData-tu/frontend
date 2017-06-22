@@ -5,11 +5,13 @@ import { Weather } from './weather';
 
 import 'rxjs/add/operator/toPromise';
 
+import { environment } from '../environments/environment';
+
 @Injectable()
 export class WeatherService {
 
 
-  private weatherUrl = 'api/weather';  // URL to web api
+  private weatherUrl = environment.restEndpoint + '/api/indices/weather';  // URL to web api
  
   constructor(private http: Http) { }
   
@@ -18,9 +20,11 @@ export class WeatherService {
               .toPromise()
               .then(response => 
               {
-                return response.json().data.map(d => {
-                  d.date = new Date(d.date)
-                  return d;
+                return response.json().map(d => {                  
+                  return {
+                    "date": new Date(d.timestamp),
+                    "value": d.sensors.temperature.observation_value
+                  };
                 }
                   ) as Weather[]
               })

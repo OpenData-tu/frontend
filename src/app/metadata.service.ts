@@ -4,10 +4,12 @@ import { Datasource } from "./meta";
 import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
+import { environment } from '../environments/environment';
+
 @Injectable()
 export class MetadataService {
   
-  private weatherUrl = 'api/datasources';  // URL to web api
+  private weatherUrl = environment.restEndpoint + '/api/indices';  // URL to web api
  
   constructor(private http: Http) { }
   
@@ -16,7 +18,7 @@ export class MetadataService {
               .toPromise()
               .then(response => 
               {
-                return response.json().data as Datasource[]
+                return response.json() as Datasource[]
               })
               .catch(this.handleError);
   }
