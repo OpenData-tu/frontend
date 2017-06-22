@@ -48,11 +48,11 @@ title: string = "All Data"
 
   day(): void {
     this.svg.remove('path');
-    this.weatherService.getAggregations("avg", "day").then(d => this.repaintSvg(d));
+    this.weatherService.getAggregations("avg", "minute").then(d => this.repaintSvg(d));
   }
 
   month(): void {        
-    this.weatherService.getAggregations("avg", "month").then(d => this.repaintSvg(d));
+    this.weatherService.getAggregations("avg", "hour").then(d => this.repaintSvg(d));
   }
 
   private repaintSvg(d : Weather[]){   
