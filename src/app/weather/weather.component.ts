@@ -33,14 +33,34 @@ subtitle: string = 'Line Chart';
   }
 
   ngOnInit() {
-    this.weatherService.getWeather().then( d => {
+    this.weatherService.getAggregations("avg", "month").then(d => this.repaintSvg(d));
+    
+    
+    
+  }
+
+  detail(): void {
+    this.svg.remove('path');
+    this.weatherService.getWeather().then(d => this.repaintSvg(d));
+    
+  }
+
+  day(): void {
+    this.svg.remove('path');
+    this.weatherService.getAggregations("avg", "day").then(d => this.repaintSvg(d));
+  }
+
+  month(): void {
+    this.svg.remove('path');
+    this.weatherService.getAggregations("avg", "month").then(d => this.repaintSvg(d));
+  }
+
+  private repaintSvg(d : Weather[]){   
       this.initSvg()
       this.initAxis(d);
       this.drawAxis();
       this.drawLine(d);
 
-    })
-    
   }
 
   private initSvg() {

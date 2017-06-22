@@ -11,7 +11,7 @@ import { environment } from '../environments/environment';
 export class WeatherService {
 
 
-  private weatherUrl = environment.restEndpoint + '/api/indices/weather';  // URL to web api
+  private weatherUrl = environment.restEndpoint + '/api/indices/weather'; 
  
   constructor(private http: Http) { }
   
@@ -24,6 +24,22 @@ export class WeatherService {
                   return {
                     "date": new Date(d.timestamp),
                     "value": d.sensors.temperature.observation_value
+                  };
+                }
+                  ) as Weather[]
+              })
+              .catch(this.handleError);
+  }
+
+  getAggregations(type: string, time: string): Promise<Weather[]> {
+    return this.http.get(this.weatherUrl + "/bucket/" + time + "/agr/" + type)
+              .toPromise()
+              .then(response => 
+              {
+                return response.json().map(d => {                  
+                  return {
+                    "date": new Date(d.timestamp),
+                    "value": d.value
                   };
                 }
                   ) as Weather[]
