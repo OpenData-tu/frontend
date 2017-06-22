@@ -16,6 +16,7 @@ import * as d3Axis from "d3-axis";
 export class WeatherComponent implements OnInit {
 
 subtitle: string = 'Line Chart';
+title: string = "All Data"
 
   private margin = {top: 20, right: 20, bottom: 30, left: 50};
   private width: number;
@@ -50,12 +51,12 @@ subtitle: string = 'Line Chart';
     this.weatherService.getAggregations("avg", "day").then(d => this.repaintSvg(d));
   }
 
-  month(): void {
-    this.svg.remove('path');
+  month(): void {        
     this.weatherService.getAggregations("avg", "month").then(d => this.repaintSvg(d));
   }
 
   private repaintSvg(d : Weather[]){   
+    this.title = "Dataset has " + d.length + " Datapoints";
       this.initSvg()
       this.initAxis(d);
       this.drawAxis();
