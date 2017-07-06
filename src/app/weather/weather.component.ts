@@ -51,7 +51,8 @@ title: string = "All Data"
     this.weatherService.getAggregations("avg", "minute").then(d => this.repaintSvg(d));
   }
 
-  month(): void {        
+  month(): void {      
+    this.svg.remove('path');  
     this.weatherService.getAggregations("avg", "hour").then(d => this.repaintSvg(d));
   }
 

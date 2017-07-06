@@ -17,6 +17,14 @@ export class ExplorerComponent implements OnInit {
   map: any;
   mode: boolean = true;
 
+  layers = [];
+
+  startPointX = 0.0;
+  startPointY = 0.0;
+  endPointX = 0.0;
+  endPointY = 0.0;
+
+  shiftKeyDown = false;
   selected = "";
   pointarray = [];
   constructor(private http: Http) { }
@@ -53,7 +61,20 @@ export class ExplorerComponent implements OnInit {
     console.log(this.mode);
     if(this.mode){
       this.map.dragging.enable();
+      this.map.dragging.enable();
+      this.map.touchZoom.enable();
+      this.map.doubleClickZoom.enable();
+      this.map.scrollWheelZoom.enable();
+      this.map.boxZoom.enable();
+      this.map.keyboard.enable();
+      this.map.dragging.enable();
     }else{
+      this.map.dragging.disable();
+      this.map.touchZoom.disable();
+      this.map.doubleClickZoom.disable();
+      this.map.scrollWheelZoom.disable();
+      this.map.boxZoom.disable();
+      this.map.keyboard.disable();
       this.map.dragging.disable();
     }
     
@@ -80,6 +101,12 @@ export class ExplorerComponent implements OnInit {
 
   }
 
+  clickOnMap(e){
+    if(this.mode){
+      this.zoomToFeature(e);
+
+    }
+  }
   zoomToFeature(e) {
     this.map.fitBounds(e.target.getBounds());
   }
@@ -92,7 +119,32 @@ export class ExplorerComponent implements OnInit {
     layer.on({
       mouseover: (e) => this.highlightFeature(e),
       mouseout: (e) => this.resetHighlight(e),
-      click: (e) => this.zoomToFeature(e)      
+      click: (e) => this.clickOnMap(e),
+      mousedown: (e) => {
+        console.log("Mouse down: " + e);
+        if(e.originalEvent.shiftKey)
+          this.shiftKeyDown = true;
+        this.startPointX = e.latlng.lat;
+        this.startPointY = e.latlng.lng;
+      },
+      mouseup: (e) => {
+        if(this.mode)
+          return;
+        this.endPointX = e.latlng.lat;
+        this.endPointY = e.latlng.lng;
+        if(!this.shiftKeyDown){
+            this.layers.forEach(l => {
+            l.remove();
+          });
+        }else{
+          this.layers = [];
+
+        }
+        
+        
+        this.layers.push(L.rectangle([[this.startPointX, this.startPointY],[this.endPointX, this.endPointY]], {color: "#ff7800", weight: 1}).addTo(this.map)); 
+        this.shiftKeyDown = false;
+      }
     });
   }
 

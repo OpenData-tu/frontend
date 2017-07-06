@@ -6,7 +6,7 @@
     <div class="col-10">
       <div id="map" style="min-height: 700px"> </div>
     </div>
-    <div class="col">
+    <div class="col-2">
       <div class="form-check">
   <label class="form-check-label">
     <input class="form-check-input" type="radio" name="mode" [value]=true [(ngModel)]="mode" (change)="changeMode()" checked>
@@ -19,7 +19,13 @@
     Select
   </label>
 </div>
+<p>
       {{selected}}
+</p>
+<p>
+  {{startPointX}}
+  {{startPointY}}
+</p>
       <!--
       <li *ngFor="let obj of pointarray">
                 {{obj | json}}
