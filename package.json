@@ -25,6 +25,7 @@
     "bootstrap": "^4.0.0-alpha.6",
     "core-js": "^2.4.1",
     "d3": "4.2.6",
+    "leaflet": "^1.1.0",
     "reflect-metadata": "0.1.8",
     "rxjs": "^5.1.0",
     "zone.js": "^0.8.4"
