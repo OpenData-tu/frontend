@@ -136,11 +136,8 @@ export class ExplorerComponent implements OnInit {
             this.layers.forEach(l => {
             l.remove();
           });
-        }else{
           this.layers = [];
-
         }
-        
         
         this.layers.push(L.rectangle([[this.startPointX, this.startPointY],[this.endPointX, this.endPointY]], {color: "#ff7800", weight: 1}).addTo(this.map)); 
         this.shiftKeyDown = false;
